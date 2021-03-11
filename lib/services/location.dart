@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:geolocator/geolocator.dart';
 
 class Location {
@@ -8,10 +10,8 @@ class Location {
     try {
       Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.low);
-
-      longitude = position.longitude;
       latitude = position.latitude;
-      print(Position());
+      longitude = position.longitude;
     } catch (e) {
       print(e);
     }
