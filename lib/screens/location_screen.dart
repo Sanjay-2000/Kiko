@@ -20,7 +20,6 @@ class _LocationScreenState extends State<LocationScreen> {
   String cityname;
 
   void initState() {
-    // TODO: implement initState
     super.initState();
     updateui(widget.locationweather);
   }
@@ -63,10 +62,9 @@ class _LocationScreenState extends State<LocationScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   FlatButton(
-                    onPressed: () async {
-                      var weatherdata = await weather.getLocationWeather();
+                    onPressed: () {
+                      var weatherdata = weather.getLocationWeather();
                       updateui(weatherdata);
-                      return weatherdata;
                     },
                     child: Icon(
                       Icons.near_me,
@@ -74,13 +72,19 @@ class _LocationScreenState extends State<LocationScreen> {
                     ),
                   ),
                   FlatButton(
-                    onPressed: () {
-                      Navigator.push(
+                    onPressed: () async {
+                      var typedname = await Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) {
                           return CityScreen();
                         }),
                       );
+
+                      if (typedname != null) {
+                        var weatherdata =
+                            await weather.getCityWeather(typedname);
+                        updateui(weatherdata);
+                      }
                     },
                     child: Icon(
                       Icons.location_city,
